@@ -1,6 +1,5 @@
-# Code of your exercise
+package fr.istic.vv.Exercise3;
 
-```Java
 class Person {
     private int age;
     private String name;
@@ -12,5 +11,3 @@ class Person {
         return age > 17;
     }
 }
-
-```
