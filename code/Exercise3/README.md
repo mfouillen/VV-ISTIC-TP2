@@ -1,16 +1,3 @@
 # Code of your exercise
 
-```Java
-class Person {
-    private int age;
-    private String name;
-    public String lastname;
-    
-    public String getName() { return name; }
-
-    public boolean isAdult() {
-        return age > 17;
-    }
-}
-
-```
+Put here all the code created for this exercise
