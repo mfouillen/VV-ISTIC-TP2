@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.ast.visitor.VoidVisitorWithDefaults;
 import com.github.javaparser.utils.SourceRoot;
 
 import java.io.File;
@@ -29,13 +30,31 @@ public class Main {
 
         SourceRoot root = new SourceRoot(file.toPath());
 
-        PublicElementsPrinter printer = new TCCReporter();
+        
+        if(args.length >= 2){
+            if(args[1].equals("noGetter")){
+                NoGetterReporter printer = new NoGetterReporter();
+                root.parse("", (localPath, absolutePath, result) -> {
+                    result.ifSuccessful(unit -> unit.accept(printer, null));
+                    return SourceRoot.Callback.Result.DONT_SAVE;
+                });
+            }
+            else if(args[1].equals("TCC")){
+                TCCReporter printer = new TCCReporter();
+                root.parse("", (localPath, absolutePath, result) -> {
+                    result.ifSuccessful(unit -> unit.accept(printer, null));
+                    return SourceRoot.Callback.Result.DONT_SAVE;
+                });
+            }
+        }
+        else {
+            PublicElementsPrinter printer = new PublicElementsPrinter();
+            root.parse("", (localPath, absolutePath, result) -> {
+                result.ifSuccessful(unit -> unit.accept(printer, null));
+                return SourceRoot.Callback.Result.DONT_SAVE;
+            });
+        }
 
-        root.parse("", (localPath, absolutePath, result) -> {
-            result.ifSuccessful(unit -> unit.accept(printer, null));
-            return SourceRoot.Callback.Result.DONT_SAVE;
-        });
+        
     }
-
-
 }
