@@ -23,3 +23,43 @@ Use your rule with different projects and describe you findings below. See the [
 
 ## Answer
 
+
+We are adding a new rule to our file quickstart.xml :
+```xml
+<rule name="AvoidNestedIf" language="java" message="If nested detected" class="net.sourceforge.pmd.lang.rule.XPathRule">
+    <description>Avoid nested IF</description>
+    <priority>3</priority>
+    <properties>
+        <property name="xpath">
+            <value>
+                <![CDATA[
+                //IfStatement//IfStatement//IfStatement
+                ]]>
+            </value>
+        </property>
+    </properties>
+</rule>
+```
+
+We start with the command : 
+pmd check -f html --rulesets=D:\Downloads\commons-math-master\commons-math-master\rulesets\java\quickstart.xml -d D:\Downloads\commons-math-master -r result.html
+
+
+Now we are able to stop nested if. For example, in the folder : \commons-math-master\commons-math-master\commons-math-core\src\main\java\org\apache\commons\math4\core\jdkmath\AccurateMath.java
+
+At line 861  we have nested if : 
+```java
+if (x < 0.0) {
+
+// We don't check against intVal here as conversion of large negative double values
+// may be affected by a JIT bug. Subsequent comparisons can safely use intVal
+if (x < -746d) {
+    if (hiPrec != null) {
+        hiPrec[0] = 0.0;
+        hiPrec[1] = 0.0;
+    }
+    return 0.0;
+}
+```
+So the rule is working properly
+
