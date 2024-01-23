@@ -100,11 +100,11 @@ public class TCCReporter extends VoidVisitorWithDefaults<Void>{
     private void writeReport() {
         System.out.println("\n" + TAB + "------REPORT------");
 
-        // System.out.println(TAB + "Methods : " + methods);
+        System.out.println(TAB + "Methods : " + methods);
 
         Map<Pair<String, String>, List<String>> cohesionMap = getCohesionMap();
 
-        // System.out.println(TAB + "Cohesion Map : " + cohesionMap);
+        System.out.println(TAB + "Cohesion Map : " + cohesionMap);
 
         long numberOfEdges = 0;
 
